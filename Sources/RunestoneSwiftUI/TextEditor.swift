@@ -18,13 +18,15 @@ public struct TextEditor: UIViewRepresentable {
   let actualTheme: OverridingTheme
   public var theme: Theme { actualTheme.base }
   public let language: TreeSitterLanguage?
+  public var backgroundColor: UIColor = .systemBackground
   public let configuration: Configuration
   
-  public init(text: Binding<String>, theme: Theme, language: TreeSitterLanguage? = nil, configuration: Configuration = .init()) {
+  public init(text: Binding<String>, theme: Theme, language: TreeSitterLanguage? = nil, configuration: Configuration = .init(), backgroundColor: UIColor = .systemBackground) {
     self.text = text
     self.actualTheme = OverridingTheme(base: theme)
     self.language = language
     self.configuration = configuration
+    self.backgroundColor = backgroundColor
   }
   
   public func makeCoordinator() -> TextEditorCoordinator {
@@ -41,7 +43,7 @@ public struct TextEditor: UIViewRepresentable {
     }
     
     // We assume your theme matches the device's mode
-    textView.backgroundColor = .systemBackground
+    textView.backgroundColor = backgroundColor
     
     textView.insertionPointColor = theme.textColor
     textView.selectionBarColor = theme.textColor
